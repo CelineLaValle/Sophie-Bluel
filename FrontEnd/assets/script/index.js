@@ -14,6 +14,7 @@
     let img = document.createElement('img');
     let figcaption = document.createElement('figcaption');
     img.src = work.imageUrl;
+    figcaption.textContent = work.title;
     figure.classList.add("gallery");
     works.appendChild(figure);
     works.appendChild(img);
