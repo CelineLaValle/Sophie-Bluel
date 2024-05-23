@@ -69,12 +69,51 @@ async function displayButton() {
     btn.setAttribute('category', element.id);
     btn.classList.add('filter');
     filtersContainer.appendChild(btn);
-    btn.addEventListener('click', (e) => {
-      const category = e.target.getAttribute('category');
-      console.log(category)
-    })
   })
+  addEventOnButtons();
 }
 
 displayButton();
 
+
+/* Fonction qui met un évènement sur mes boutons */
+
+function addEventOnButtons() {
+  const buttons = document.querySelectorAll('.filter');
+  console.log(buttons);
+  /* On itère sur les boutons */
+  buttons.forEach(btn => {
+    /* On ajoute un évènement sur chaque bouton */
+    btn.addEventListener('click', (e) => {
+      const category = e.target.getAttribute('category');
+      console.log(category);
+      filtersWorks(category);
+    })
+     })
+    
+}
+
+
+/* Fonction pour trier */
+
+/* Récupération de category par ma fonction filtersWorks(category) => filterWorks(categoryBtn) */
+function filtersWorks(categoryBtn) {
+  const allWorks = works.querySelectorAll('figure');
+  console.log(allWorks)
+  /* Itère sur les figures */
+  allWorks.forEach(figure => {
+    console.log(figure.getAttribute('category'));
+    /* On compare les catégories des boutons avec les catégories des travaux */
+    const categoryWork = figure.getAttribute('category');
+    if (categoryBtn === categoryWork) {
+      figure.style.display = 'block';
+    }
+    else if (categoryBtn == 0) {
+      figure.style.display = 'block';
+    }
+    else {
+      figure.style.display = 'none';
+    }
+      
+  })
+}
