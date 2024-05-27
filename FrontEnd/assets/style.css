@@ -259,6 +259,7 @@ dialog[open] {
 
 .thumbnail {
 	width: 18%;
+	position: relative;
 }
 
 .thumbnail img {
@@ -267,10 +268,10 @@ dialog[open] {
 
 .delete {
 	background-color: #000000;
-	position: relative;
+	position: absolute;
 	width: 1%;
 	height: 1%;
-	top: -105px;
+	top: 5px;
 	left: 55px;
 	padding: 10px;
 	color: white;
