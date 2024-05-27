@@ -106,6 +106,7 @@ const errorMessage = document.querySelector('.error');
   }
 
   // On écoute l'envoi (submit)
+  if (form) {
   form.addEventListener("submit", (e) => {
     e.preventDefault();
     const userEmail = email.value;
@@ -117,6 +118,55 @@ const errorMessage = document.querySelector('.error');
   errorMessage.textContent = '';
   postUsers(userEmail, userPassword);
 });
+}
 
 // Quand l'utilisateur est connecté
 
+// // Récupération du token stocké dans sessionStorage dans la variable token
+// const token = window.sessionStorage.getItem('token');
+
+// const vérifyTokenIsPresent = () =>  {
+//   const login_button = document.getElementById("id_login_button");
+//   // Récupération de la valeur "href" de la variable login-button et la stocke dans cette variable
+//   const hrefOrigin = login_button.getAttribute("href");
+//   // Si le token existe alors il est connecté
+//   if(token) {
+//     // Supprime le lien de connexion
+//     login_button.removeAttribute("href");
+//     // Remplace le texte par logout
+//     login_button.textContent = "logout";
+//     // Ajoute un gestionnaire d'événement pour le clic sur le bouton logout
+//     login_button.addEventListener("click", e => {
+//       e.preventDefault();
+//       // Supprime le token de la sessionStorage
+//       window.sessionStorage.removeItem("token");
+//       // Remet le lien de connexion
+//       login_button.setAttribute("href", hrefOrigin);
+//       // Change le texte par login
+//       login_button.textContent = "login";
+//     });
+//   }
+// }
+
+
+// vérifyTokenIsPresent();
+
+// Récupération du token stocké dans sessionStorage dans la variable token
+const token = window.sessionStorage.getItem('token');
+const verifyTokenIsPresent = () =>  {
+    const login_button = document.getElementById("id_login_button");
+    // Si le token existe, alors l'utilisateur est connecté
+    if(token) {
+    // Remplace le texte du bouton par logout
+    login_button.textContent = "logout";
+    // Ajoute un gestionnaire d'événement pour le clic sur le bouton logout
+    login_button.addEventListener("click", () => {
+      // Supprime le token de sessionStorage
+      window.sessionStorage.removeItem("token");
+      // Change le texte du bouton par login
+      login_button.textContent = "login";
+      window.location.href = '../login.html';
+    });
+  }}
+
+  verifyTokenIsPresent();

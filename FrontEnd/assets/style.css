@@ -144,9 +144,8 @@ li:hover {
 	font-weight: 700;
 	color: #1D6154;
 	background-color: white;
-	margin : 2em auto ;
-	padding: 8px;
-	width: 180px;
+	margin-bottom : 8%;
+	padding: 10px;
 	text-align: center;
 	border-width: 1px;
 	border-radius: 60px ;
@@ -171,7 +170,7 @@ li:hover {
 }
 #contact {
 	width: 50%;
-margin: auto;
+	margin: auto;
 }
 #contact > * {
 	text-align: center;
@@ -222,9 +221,90 @@ input[type="submit"]{
 }
 
 .input-error {
-	border: 1px solid red;
+	border: 1px solid red !important;
 }
 
+.modal {
+	width: 50%;
+	border-radius: 10px;
+	border: none;
+}
+
+dialog[open] {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+
+.button_modal {
+	font-family: 'Work Sans';
+	background: none;
+	border: none;
+}
+
+.title_modal {
+	font-family: 'Work Sans';
+	font-size: 26px;
+	text-align: center;
+	padding: 50px 0 30px 0;
+}
+
+.modalWorks {
+	width: 80%;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+}
+
+.thumbnail {
+	width: 18%;
+}
+
+.thumbnail img {
+	width: 100%;
+}
+
+.delete {
+	background-color: #000000;
+	position: relative;
+	width: 1%;
+	height: 1%;
+	top: -105px;
+	left: 55px;
+	padding: 10px;
+	color: white;
+	border-radius: 2px;
+	font-size: 13px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.line {
+	border: 1px solid #B3B3B3;
+	width: 80%;
+	margin-top: 50px;
+}
+
+.input_modal {
+	height: 50px;
+	border: none;
+	padding-left: 10px;
+	width: inherit !important;
+}
+
+.button_close {
+	background: none;
+	border: none;
+	position: absolute;
+    top: 0;
+    right: 0;
+	padding: 30px;
+	font-size: 20px;
+}
+
+  
 footer nav ul {
 	display: flex;
 	justify-content: flex-end;

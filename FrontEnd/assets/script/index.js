@@ -117,3 +117,38 @@ function filtersWorks(categoryBtn) {
       
   })
 }
+
+
+const dialog = document.querySelector(".modal");
+const showButton = document.querySelector(".button_modal");
+const closeButton = document.querySelector(".button_close");
+
+// Le bouton "Afficher la fenêtre" ouvre le dialogue
+showButton.addEventListener("click", () => {
+  dialog.showModal();
+});
+
+// Le bouton "Fermer" ferme le dialogue
+closeButton.addEventListener("click", () => {
+  dialog.close();
+});
+
+async function displayWorksModal() {
+  const arrayWorks = await getWorks();
+  arrayWorks.forEach(element => {
+    const figure = document.createElement('figure');
+    figure.classList.add("thumbnail");
+    const img = document.createElement('img');
+    const modalWorks = document.querySelector('.modalWorks');
+    img.src = element.imageUrl;
+    const deleteWork = document.createElement('div');
+    deleteWork.classList.add('delete');
+    deleteWork.innerHTML = '<i class="fa-solid fa-trash-can"></i>';
+    figure.setAttribute('category', element.categoryId);
+    figure.appendChild(img);
+    figure.appendChild(deleteWork);
+    modalWorks.appendChild(figure);
+   })
+ }
+
+ displayWorksModal();
