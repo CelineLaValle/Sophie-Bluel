@@ -22,7 +22,7 @@
 	<nav>
 		<ul>
 			<li>projets</li>
-			<li>contact</li>
+			<li><a href="#contact">contact</li>
 			<li><a href="login.html" id="id_login_button">login</a></li>
 			<li class="admin"></li>
 			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
@@ -67,11 +67,21 @@
 </main>
 
 <dialog class="modal">
+	<div class="modal_galery">
 	<button autofocus class="button_close"><i class="fa-solid fa-xmark"></i></button>
 	<p class="title_modal">Galerie photo</p>
 	<div class="modalWorks"></div>
 	<hr class="line">
-	<input type="submit" class="input_modal" value="Ajouter une photo">
+	<input type="submit" id="addPhoto" class="input_modal" value="Ajouter une photo">
+</div>
+<div class="modal_add_photo hidden">
+	<button autofocus class="button_close"><i class="fa-solid fa-xmark"></i></button>
+	<button autofocus class="button_back"><i class="fa-solid fa-arrow-left"></i></button>
+	<p class="title_modal">Ajout photo</p>
+	<div class="modalWorks"></div>
+	<hr class="line">
+	<input type="submit" class="input_modal" value="Valider">
+</div>
   </dialog>				
 
 <footer class="footer">

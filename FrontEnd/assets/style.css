@@ -230,11 +230,29 @@ input[type="submit"]{
 	border: none;
 }
 
-dialog[open] {
+/* dialog[open] {
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
+} */
+
+.modal_galery {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+
+.modal_add_photo {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+
+.hidden {
+	display: none;
 }
 
 .button_modal {
@@ -269,10 +287,10 @@ dialog[open] {
 .delete {
 	background-color: #000000;
 	position: absolute;
-	width: 1%;
-	height: 1%;
+	width: 5px;
+	height: 15px;
 	top: 5px;
-	left: 55px;
+	left: 90px;
 	padding: 10px;
 	color: white;
 	border-radius: 2px;
@@ -292,7 +310,7 @@ dialog[open] {
 	height: 50px;
 	border: none;
 	padding-left: 10px;
-	width: inherit !important;
+	width: 40% !important;
 }
 
 .button_close {
@@ -301,6 +319,16 @@ dialog[open] {
 	position: absolute;
     top: 0;
     right: 0;
+	padding: 30px;
+	font-size: 20px;
+}
+
+.button_back {
+	background: none;
+	border: none;
+	position: absolute;
+    top: 0;
+    left: 0;
 	padding: 30px;
 	font-size: 20px;
 }

@@ -94,6 +94,8 @@ function filtersWorks(categoryBtn) {
 }
 
 
+// Fonction modal
+
 const dialog = document.querySelector(".modal");
 const showButton = document.querySelector(".button_modal");
 const closeButton = document.querySelector(".button_close");
@@ -119,6 +121,9 @@ async function displayWorksModal() {
     const deleteWork = document.createElement('div');
     deleteWork.classList.add('delete');
     deleteWork.innerHTML = '<i class="fa-solid fa-trash-can"></i>';
+    deleteWork.addEventListener('click', function() {
+      figure.remove();
+    });
     figure.setAttribute('category', element.categoryId);
     figure.appendChild(img);
     figure.appendChild(deleteWork);
@@ -127,3 +132,22 @@ async function displayWorksModal() {
  }
 
  displayWorksModal();
+
+// Fonction afficher l'une ou l'autre modal
+
+function showModal() {
+  const addPhoto = document.querySelector("#addPhoto");
+  const modalGalery = document.querySelector(".modal_galery");
+  const modalAddPhoto = document.querySelector(".modal_add_photo");
+  const buttonBack = document.querySelector(".button_back");
+  addPhoto.addEventListener('click', () => {
+    modalGalery.classList.add('hidden');
+    modalAddPhoto.classList.remove('hidden');
+  });
+  buttonBack.addEventListener('click', () => {
+    modalAddPhoto.classList.add('hidden');
+    modalGalery.classList.remove('hidden');
+  });
+  }
+
+  showModal();
