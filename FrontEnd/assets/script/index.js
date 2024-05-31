@@ -9,6 +9,26 @@ async function getCategories () {
   return await reponse.json();
 }
 
+async function deleteWorks (id) {
+  const token = sessionStorage.getItem('token');
+  try {
+    fetch(`http://localhost:5678/api/works/${id}`, { method: "DELETE", 
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }})
+    .then((reponse) => {
+      return reponse.json();
+    })
+    if (!response.ok) {
+      console.log("La suppression n'a pas fonctionnée");
+    }
+    const data = response.json();
+    console.log("La suppression a fonctionnée" ,data);
+  } catch (error) {
+    console.error('Erreur lors de la connexion :', error);
+  }
+}
+
 /* Variable */
 const works = document.querySelector('.gallery');
 
@@ -121,17 +141,29 @@ async function displayWorksModal() {
     const deleteWork = document.createElement('div');
     deleteWork.classList.add('delete');
     deleteWork.innerHTML = '<i class="fa-solid fa-trash-can"></i>';
-    deleteWork.addEventListener('click', function() {
-      figure.remove();
-    });
     figure.setAttribute('category', element.categoryId);
     figure.appendChild(img);
-    figure.appendChild(deleteWork);
     modalWorks.appendChild(figure);
+    figure.appendChild(deleteWork);
    })
  }
 
  displayWorksModal();
+
+ // Fonction pour supprimer une photo
+
+ async function removeWorks() {
+  const removeW = await deleteWorks();
+  removeW.forEach(trash => {
+    const trashAll = document.querySelectorAll('figure');
+    console.log(trashAll);
+    trashAll.addEventListener('click', function() {
+      figure.remove();
+    });
+ })
+};
+
+removeWorks();
 
 // Fonction afficher l'une ou l'autre modal
 
