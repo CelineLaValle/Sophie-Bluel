@@ -9,26 +9,6 @@ async function getCategories () {
   return await reponse.json();
 }
 
-async function deleteWorks (id) {
-  const token = sessionStorage.getItem('token');
-  try {
-    fetch(`http://localhost:5678/api/works/${id}`, { method: "DELETE", 
-    headers: {
-      'Authorization': `Bearer ${token}`
-    }})
-    .then((reponse) => {
-      return reponse.json();
-    })
-    if (!response.ok) {
-      console.log("La suppression n'a pas fonctionnée");
-    }
-    const data = response.json();
-    console.log("La suppression a fonctionnée" ,data);
-  } catch (error) {
-    console.error('Erreur lors de la connexion :', error);
-  }
-}
-
 /* Variable */
 const works = document.querySelector('.gallery');
 
@@ -43,6 +23,7 @@ async function displayWorks() {
    img.src = element.imageUrl;
    figcaption.textContent = element.title;
    figure.setAttribute('category', element.categoryId);
+   figure.setAttribute('worksLargeId', element.id);
    figure.appendChild(img);
    figure.appendChild(figcaption);
    works.appendChild(figure);
@@ -113,6 +94,16 @@ function filtersWorks(categoryBtn) {
   })
 }
 
+// Bande mode édition
+
+const header = document.querySelector(".header");
+const adminDiv = document.querySelector(".banner-admin");
+const adminP = document.createElement("p");
+adminDiv.classList.add("banner-admin");
+adminP.classList.add("banner-p");
+adminP.innerHTML = 'Mode édition <i class="fa-solid fa-xmark"></i>';
+adminDiv.appendChild(adminP);
+header.appendChild(adminDiv);
 
 // Fonction modal
 
@@ -141,29 +132,47 @@ async function displayWorksModal() {
     const deleteWork = document.createElement('div');
     deleteWork.classList.add('delete');
     deleteWork.innerHTML = '<i class="fa-solid fa-trash-can"></i>';
-    figure.setAttribute('category', element.categoryId);
+    figure.setAttribute('worksId', element.id);
     figure.appendChild(img);
     modalWorks.appendChild(figure);
     figure.appendChild(deleteWork);
-   })
- }
+    deleteWork.addEventListener('click', function() {
+            deleteWorks(element.id, figure);
+      });
+    });
+  };
 
  displayWorksModal();
 
  // Fonction pour supprimer une photo
 
- async function removeWorks() {
-  const removeW = await deleteWorks();
-  removeW.forEach(trash => {
-    const trashAll = document.querySelectorAll('figure');
-    console.log(trashAll);
-    trashAll.addEventListener('click', function() {
-      figure.remove();
-    });
- })
-};
+ async function deleteWorks(id, figure) {
+  const token = sessionStorage.getItem("token");
 
-removeWorks();
+  console.log(id);
+  await fetch(`http://localhost:5678/api/works/${id}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+
+  }).then((response) => {
+    if (!response.ok) {
+      console.log("La suppression n'a pas fonctionnée");
+    } else {
+      console.log("La suppression a fonctionnée");
+      figure.remove();
+      const figuresGallery = document.querySelector('.gallery');
+      const figuresLarges = figuresGallery.querySelectorAll('figure');
+      console.log(figuresLarges);
+      figuresLarges.forEach (figureLarge => {
+       if (id == figureLarge.getAttribute("worksLargeId")) {
+         figureLarge.remove();
+       }
+      })
+    }
+  });
+}
 
 // Fonction afficher l'une ou l'autre modal
 

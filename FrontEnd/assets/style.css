@@ -130,6 +130,23 @@ li:hover {
 	text-align: center;
 	margin-bottom: 1em;
 }
+
+.banner-admin {
+	position: fixed;
+	top: 0;
+	display: flex;
+	height: 59px;
+	width: 100%;
+	justify-content: center;
+	align-items: center;
+	background-color: black;	
+  }
+
+  .banner-p {
+	font-family: "Work Sans";
+	color: white;
+  }
+
 .filters {
 	align-items: center;
 	justify-content: center;
