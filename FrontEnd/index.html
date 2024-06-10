@@ -18,7 +18,7 @@
 </head>
 <body>
 <header class="header">
-	<div class="banner-admin"></div>
+	<div class="banner-admin privateContent"></div>
 	<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
 	<nav>
 		<ul>
@@ -43,9 +43,13 @@
 		</article>
 	</section>
 	<section id="portfolio">
+		<div class="section-title">
 		<h2>Mes Projets</h2>
+	<div class="modifyWorks privateContent">
 		<i class="fa-regular fa-pen-to-square"></i>
 		<button class="button_modal">modifier</button>
+	</div>
+</div>
 		<div id="filters-container" class="filters">
 			<button category="0" class="filter">Tous</button>
 		</div>
@@ -80,8 +84,17 @@
 	<button autofocus class="button_back"><i class="fa-solid fa-arrow-left"></i></button>
 	<p class="title_modal">Ajout photo</p>
 	<div class="modalWorks"></div>
+	<div class="upload-works">
+	<img src="./assets/icons/img.png" alt="image">
+	<label for="getFile" class="add-img">+ Ajouter Photo</label>
+	<input type="file" id="image" name="image" accept="image/*" required><br><br>
+    </div>
+	<label for="title" class="label-name">Titre</label>
+    <input type="text" id="title-image" name="title" required><br><br>
+    <label for="category" class="label-name">Catégorie</label>
+    <select id="category-image" name="category" required>
 	<hr class="line">
-	<input type="submit" class="input_modal" value="Valider">
+	<input type="submit" id="uploadButton" class="input_modal" value="Valider">
 </div>
   </dialog>				
 
@@ -93,6 +106,5 @@
 	</nav>
 </footer>
 <script src="assets/script/index.js"></script>
-<script src="assets/script/login.js"></script>
 </body>
 </html>

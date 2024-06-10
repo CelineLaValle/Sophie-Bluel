@@ -134,12 +134,12 @@ li:hover {
 .banner-admin {
 	position: fixed;
 	top: 0;
-	display: flex;
-	height: 59px;
+	left: 0;
+	height: 45px;
 	width: 100%;
 	justify-content: center;
 	align-items: center;
-	background-color: black;	
+	background-color: black;
   }
 
   .banner-p {
@@ -272,6 +272,21 @@ input[type="submit"]{
 	display: none;
 }
 
+.private-content {
+	display: none;
+}
+
+.section-title {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 20px;
+}
+
+.modifyWorks {
+	margin-bottom: 25px;
+}
+
 .button_modal {
 	font-family: 'Work Sans';
 	background: none;
@@ -315,6 +330,36 @@ input[type="submit"]{
 	display: flex;
 	align-items: center;
 	justify-content: center;
+}
+
+.upload-works {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width: 60%;
+	background: #e8f1f6;
+	border-radius: 3px;
+	height: 169px;
+}
+
+.add-img {
+  background: #cbd6dc;
+  color: #306685;
+  padding: 12px 30px;
+  border-radius: 25px;
+  cursor: pointer;
+}
+
+#title {
+  padding: 14px;
+  width: 60%;
+  border: none;
+  box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+}
+
+.label-name {
+	margin-right: 60%;
 }
 
 .line {

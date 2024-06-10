@@ -11,11 +11,12 @@ async function getCategories () {
 
 /* Variable */
 const works = document.querySelector('.gallery');
+const token = window.sessionStorage.getItem('token');
 
 /* Fonction qui affiche les travaux */
 async function displayWorks() {
   const arrayWorks = await getWorks();
-  console.log(arrayWorks);
+  // console.log(arrayWorks);
   arrayWorks.forEach(element => {
    const figure = document.createElement('figure');
    const img = document.createElement('img');
@@ -38,7 +39,7 @@ const filtersContainer = document.querySelector('.filters');
 
 async function displayButton() {
   const categories = await getCategories();
-  console.log(categories);
+  // console.log(categories);
   categories.forEach(element => {
     const btn = document.createElement('button');
     btn.textContent = element.name;
@@ -56,13 +57,13 @@ displayButton();
 
 function addEventOnButtons() {
   const buttons = document.querySelectorAll('.filter');
-  console.log(buttons);
+  // console.log(buttons);
   /* On itère sur les boutons */
   buttons.forEach(btn => {
     /* On ajoute un évènement sur chaque bouton */
     btn.addEventListener('click', (e) => {
       const category = e.target.getAttribute('category');
-      console.log(category);
+      // console.log(category);
       filtersWorks(category);
     })
      })
@@ -75,10 +76,10 @@ function addEventOnButtons() {
 /* Récupération de category par ma fonction filtersWorks(category) => filterWorks(categoryBtn) */
 function filtersWorks(categoryBtn) {
   const allWorks = works.querySelectorAll('figure');
-  console.log(allWorks)
+  // console.log(allWorks)
   /* Itère sur les figures */
   allWorks.forEach(figure => {
-    console.log(figure.getAttribute('category'));
+    // console.log(figure.getAttribute('category'));
     /* On compare les catégories des boutons avec les catégories des travaux */
     const categoryWork = figure.getAttribute('category');
     if (categoryBtn === categoryWork) {
@@ -101,7 +102,7 @@ const adminDiv = document.querySelector(".banner-admin");
 const adminP = document.createElement("p");
 adminDiv.classList.add("banner-admin");
 adminP.classList.add("banner-p");
-adminP.innerHTML = 'Mode édition <i class="fa-solid fa-xmark"></i>';
+adminP.innerHTML = 'Mode édition <i class="fa-solid fa-pen-to-square"></i>';
 adminDiv.appendChild(adminP);
 header.appendChild(adminDiv);
 
@@ -109,7 +110,7 @@ header.appendChild(adminDiv);
 
 const dialog = document.querySelector(".modal");
 const showButton = document.querySelector(".button_modal");
-const closeButton = document.querySelector(".button_close");
+const closeButtons = document.querySelectorAll(".button_close");
 
 // Le bouton "Afficher la fenêtre" ouvre le dialogue
 showButton.addEventListener("click", () => {
@@ -117,9 +118,12 @@ showButton.addEventListener("click", () => {
 });
 
 // Le bouton "Fermer" ferme le dialogue
-closeButton.addEventListener("click", () => {
-  dialog.close();
-});
+closeButtons.forEach((closeButton) => {
+  closeButton.addEventListener("click", () => {
+    dialog.close();
+  });
+})
+
 
 async function displayWorksModal() {
   const arrayWorks = await getWorks();
@@ -158,13 +162,13 @@ async function displayWorksModal() {
 
   }).then((response) => {
     if (!response.ok) {
-      console.log("La suppression n'a pas fonctionnée");
+      // console.log("La suppression n'a pas fonctionnée");
     } else {
-      console.log("La suppression a fonctionnée");
+      // console.log("La suppression a fonctionnée");
       figure.remove();
       const figuresGallery = document.querySelector('.gallery');
       const figuresLarges = figuresGallery.querySelectorAll('figure');
-      console.log(figuresLarges);
+      // console.log(figuresLarges);
       figuresLarges.forEach (figureLarge => {
        if (id == figureLarge.getAttribute("worksLargeId")) {
          figureLarge.remove();
@@ -192,3 +196,86 @@ function showModal() {
   }
 
   showModal();
+
+  // Fonction pour ajouter les travaux
+
+  const fileInput = document.getElementById('image');
+  const descriptionInput = document.getElementById('title-image');
+  const categoryInput = document.getElementById('category-image');
+  
+
+  async function uploadFile() {
+    // Créer une instance de FormData
+    const formData = new FormData();
+  
+    // Ajouter le fichier et la description au FormData
+    formData.append('file', fileInput.files[0]);
+    formData.append('description', descriptionInput.value);
+    formData.append('category', categoryInput.value);
+
+  try {
+    console.log('Token:', token);
+    // Envoyer la requête avec fetch
+    const response = await fetch('http://localhost:5678/api/works', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      },
+      body: formData,
+    });
+
+    // Vérifier si la réponse est correcte
+    if (response.ok) {
+      const data = await response.json();
+      console.log('Fichier téléchargé avec succès:', data);
+    } else {
+      console.error('Erreur lors du téléchargement du fichier:', response.statusText);
+    }
+  } catch (error) {
+    console.error('Erreur réseau:', error);
+  }
+}
+
+// Ajouter un écouteur d'événements au bouton de soumission
+const uploadButton = document.getElementById('uploadButton')
+uploadButton.addEventListener('click', function(event) {
+  event.preventDefault(); // Empêcher le comportement par défaut du bouton
+  uploadFile();
+});
+
+  // Afficher ou masquer le contenu en fonction de l'état de connexion
+
+const tokenContent = sessionStorage.getItem('token');
+const privateContent = document.querySelectorAll('.privateContent');
+
+if (tokenContent) {
+  privateContent.forEach (element => {
+    element.style.display = 'flex';
+    console.log(element, privateContent);
+  });
+} else {
+  privateContent.forEach(element => {
+    element.style.display = 'none';
+  });
+}
+
+// Quand l'utilisateur est connecté
+
+// Récupération du token stocké dans sessionStorage dans la variable token
+const verifyTokenIsPresent = () =>  {
+    const login_button = document.getElementById("id_login_button");
+    // Si le token existe, alors l'utilisateur est connecté
+    if(token) {
+    // Remplace le texte du bouton par logout
+    login_button.textContent = "logout";
+    // Ajoute un gestionnaire d'événement pour le clic sur le bouton logout
+    login_button.addEventListener("click", () => {
+      // Supprime le token de sessionStorage
+      window.sessionStorage.removeItem("token");
+      // Change le texte du bouton par login
+      login_button.textContent = "login";
+      window.location.href = '../login.html';
+    });
+  }}
+
+  verifyTokenIsPresent();

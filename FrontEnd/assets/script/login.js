@@ -60,25 +60,3 @@ const errorMessage = document.querySelector('.error');
   postUsers(userEmail, userPassword);
 });
 }
-
-// Quand l'utilisateur est connecté
-
-// Récupération du token stocké dans sessionStorage dans la variable token
-const token = window.sessionStorage.getItem('token');
-const verifyTokenIsPresent = () =>  {
-    const login_button = document.getElementById("id_login_button");
-    // Si le token existe, alors l'utilisateur est connecté
-    if(token) {
-    // Remplace le texte du bouton par logout
-    login_button.textContent = "logout";
-    // Ajoute un gestionnaire d'événement pour le clic sur le bouton logout
-    login_button.addEventListener("click", () => {
-      // Supprime le token de sessionStorage
-      window.sessionStorage.removeItem("token");
-      // Change le texte du bouton par login
-      login_button.textContent = "login";
-      window.location.href = '../login.html';
-    });
-  }}
-
-  verifyTokenIsPresent();
