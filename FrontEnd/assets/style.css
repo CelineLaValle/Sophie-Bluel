@@ -135,7 +135,7 @@ li:hover {
 	position: fixed;
 	top: 0;
 	left: 0;
-	height: 45px;
+	height: 40px;
 	width: 100%;
 	justify-content: center;
 	align-items: center;
@@ -268,6 +268,13 @@ input[type="submit"]{
 	flex-direction: column;
 }
 
+/* #myForm {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+} */
+
 .hidden {
 	display: none;
 }
@@ -300,9 +307,18 @@ input[type="submit"]{
 	padding: 50px 0 30px 0;
 }
 
+.modalDisplayWorks {
+	width: 80%;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+}
+
 .modalWorks {
 	width: 80%;
 	display: flex;
+	justify-content: center;
+	align-items: center;
 	flex-wrap: wrap;
 	gap: 10px;
 }
@@ -337,29 +353,93 @@ input[type="submit"]{
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	width: 60%;
+	width: 100%;
 	background: #e8f1f6;
 	border-radius: 3px;
-	height: 169px;
+	margin-bottom: 5px;
+}
+
+.upload-works img {
+	width: 70px;
+	height: 70px;
+}
+
+#getFile {
+	opacity: 0;
 }
 
 .add-img {
-  background: #cbd6dc;
-  color: #306685;
+  background: #e8f1f6;
   padding: 12px 30px;
-  border-radius: 25px;
+  border-radius: 3px;
   cursor: pointer;
+  width: 80%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
 
-#title {
+
+.addPhoto {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: #cbd6dc;
+	color: #306685;
+	border-radius: 50px;
+	width: 40%;
+	height: 36px;
+	text-align: center;
+	font-size: 14px;
+	font-family: 'Work Sans';
+}
+
+.formatPhoto {
+	font-size: 10px;
+	font-family: 'Work Sans';
+	margin-top: 5px;
+}
+
+#title-image {
   padding: 14px;
-  width: 60%;
+  width: 80%;
   border: none;
   box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+  margin: 10px 0 20px 0;
 }
 
 .label-name {
-	margin-right: 60%;
+	margin-right: 80%;
+}
+
+.label-ctg {
+	margin-right: 74%;
+}
+
+.select {
+	appearance: none;
+	margin: 10px 0 50px 0;
+	padding: 14px;
+	width: 86%;
+	border: none;
+	background-color: white;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+}
+
+.minimal {
+	background-image:
+    linear-gradient(45deg, transparent 50%, gray 50%),
+    linear-gradient(135deg, gray 50%, transparent 50%),
+    linear-gradient(to right, #ccc, #ccc);
+  background-position:
+    calc(100% - 20px) calc(1em + 2px),
+    calc(100% - 15px) calc(1em + 2px),
+    calc(100% - 2.5em) 0.5em;
+  background-size:
+    5px 5px,
+    5px 5px,
+    1px 1.5em;
+  background-repeat: no-repeat;
 }
 
 .line {

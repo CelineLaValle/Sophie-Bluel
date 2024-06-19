@@ -23,7 +23,7 @@
 	<nav>
 		<ul>
 			<li>projets</li>
-			<li><a href="#contact">contact</li>
+			<li><a href="#contact">contact</a></li>
 			<li><a href="login.html" id="id_login_button">login</a></li>
 			<li class="admin"></li>
 			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
@@ -75,24 +75,33 @@
 	<div class="modal_galery">
 	<button autofocus class="button_close"><i class="fa-solid fa-xmark"></i></button>
 	<p class="title_modal">Galerie photo</p>
-	<div class="modalWorks"></div>
+	<div class="modalDisplayWorks"></div>
 	<hr class="line">
 	<input type="submit" id="addPhoto" class="input_modal" value="Ajouter une photo">
 </div>
 <div class="modal_add_photo hidden">
-	<button autofocus class="button_close"><i class="fa-solid fa-xmark"></i></button>
-	<button autofocus class="button_back"><i class="fa-solid fa-arrow-left"></i></button>
+	<button class="button_close"><i class="fa-solid fa-xmark"></i></button>
+	<button class="button_back"><i class="fa-solid fa-arrow-left"></i></button>
 	<p class="title_modal">Ajout photo</p>
-	<div class="modalWorks"></div>
-	<div class="upload-works">
-	<img src="./assets/icons/img.png" alt="image">
-	<label for="getFile" class="add-img">+ Ajouter Photo</label>
-	<input type="file" id="image" name="image" accept="image/*" required><br><br>
-    </div>
-	<label for="title" class="label-name">Titre</label>
-    <input type="text" id="title-image" name="title" required><br><br>
-    <label for="category" class="label-name">Catégorie</label>
-    <select id="category-image" name="category" required>
+	<div class="modalWorks">
+	 <label for="getFile" class="add-img" id="add-img">
+		<span class="upload-works">
+			<img src="./assets/icons/img.png" alt="image" id="upload-works" class="upload-works">
+  		</span>
+		<span class="addPhoto">+ Ajouter photo</span>
+		<span class="formatPhoto">jpg, png : 4mo max</span>
+		<input type="file" id="getFile" name="image" accept="image/*" required>
+	</label>
+	<label for="title-image" class="label-name">Titre</label>
+    <input type="text" id="title-image" name="title" required>
+    <label for="select" class="label-ctg">Catégorie</label>
+    <select id="category-image" class="select minimal" name="category" required>
+		<option value="0" label=""></option>
+		<option value="1">Objets</option>
+		<option value="2">Appartements</option>
+		<option value="3">Hotels & restaurants</option>
+		</select>
+	</div>
 	<hr class="line">
 	<input type="submit" id="uploadButton" class="input_modal" value="Valider">
 </div>

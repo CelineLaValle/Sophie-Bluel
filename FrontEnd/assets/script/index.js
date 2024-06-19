@@ -102,7 +102,7 @@ const adminDiv = document.querySelector(".banner-admin");
 const adminP = document.createElement("p");
 adminDiv.classList.add("banner-admin");
 adminP.classList.add("banner-p");
-adminP.innerHTML = 'Mode édition <i class="fa-solid fa-pen-to-square"></i>';
+adminP.innerHTML = '<i class="fa-regular fa-pen-to-square"></i> Mode édition';
 adminDiv.appendChild(adminP);
 header.appendChild(adminDiv);
 
@@ -124,6 +124,7 @@ closeButtons.forEach((closeButton) => {
   });
 })
 
+// Afficher travaux modal
 
 async function displayWorksModal() {
   const arrayWorks = await getWorks();
@@ -131,7 +132,7 @@ async function displayWorksModal() {
     const figure = document.createElement('figure');
     figure.classList.add("thumbnail");
     const img = document.createElement('img');
-    const modalWorks = document.querySelector('.modalWorks');
+    const modalWorks = document.querySelector('.modalDisplayWorks');
     img.src = element.imageUrl;
     const deleteWork = document.createElement('div');
     deleteWork.classList.add('delete');
@@ -199,7 +200,7 @@ function showModal() {
 
   // Fonction pour ajouter les travaux
 
-  const fileInput = document.getElementById('image');
+  const fileInput = document.getElementById('getFile');
   const descriptionInput = document.getElementById('title-image');
   const categoryInput = document.getElementById('category-image');
   
@@ -209,12 +210,14 @@ function showModal() {
     const formData = new FormData();
   
     // Ajouter le fichier et la description au FormData
-    formData.append('file', fileInput.files[0]);
-    formData.append('description', descriptionInput.value);
+    formData.append('image', fileInput.files[0]);
+    formData.append('title', descriptionInput.value);
     formData.append('category', categoryInput.value);
-
-  try {
     console.log('Token:', token);
+    console.log(categoryInput.value);
+    console.log(descriptionInput.value);
+    console.log(formData);
+  try {
     // Envoyer la requête avec fetch
     const response = await fetch('http://localhost:5678/api/works', {
       method: 'POST',
@@ -228,6 +231,17 @@ function showModal() {
     if (response.ok) {
       const data = await response.json();
       console.log('Fichier téléchargé avec succès:', data);
+      const figuresGallery = document.querySelector('.gallery');
+      const figuresLarges = figuresGallery.querySelectorAll('figure');
+      figuresLarges.forEach(figure => {
+        figure.remove();
+      })
+      const figuresModal = document.querySelectorAll('.thumbnail');
+      figuresModal.forEach(figure => {
+        figure.remove();
+      })
+      displayWorks();
+      displayWorksModal();
     } else {
       console.error('Erreur lors du téléchargement du fichier:', response.statusText);
     }
@@ -236,12 +250,41 @@ function showModal() {
   }
 }
 
+// // Vérifie que le formulaire est bien rempli
+
+// document.getElementById('myForm').addEventListener('submit', function(event) {
+//   const form = event.target;
+  
+//   if (!form.checkValidity()) {
+//       event.preventDefault();
+//       alert('Veuillez remplir tous les champs obligatoires.');
+//   }
+// });
+
 // Ajouter un écouteur d'événements au bouton de soumission
 const uploadButton = document.getElementById('uploadButton')
 uploadButton.addEventListener('click', function(event) {
   event.preventDefault(); // Empêcher le comportement par défaut du bouton
   uploadFile();
 });
+
+// Afficher miniature image
+
+const getFile = document.getElementById('getFile');
+const preview = document.getElementById('upload-works');
+
+getFile.addEventListener('change',() => {
+  console.log(getFile.files[0])
+  preview.src = URL.createObjectURL(getFile.files[0]);
+  // const reader = new FileReader();
+  //   reader.addEventListener('load',(e) => {
+  //     preview.setAttribute('src', e.target.result);
+  //     console.log(reader);
+  //     console.log(e.target.result);
+  //     console.log(preview);
+  //   });
+  //   reader.readAsDataURL(getFile.files[0]);
+})
 
   // Afficher ou masquer le contenu en fonction de l'état de connexion
 
