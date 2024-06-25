@@ -198,6 +198,21 @@ function showModal() {
 
   showModal();
 
+// Fonction pour vider le formulaire une fois le projet validé
+
+  const myForm = document.getElementById('myForm');
+
+  const resetFormFields = () => {
+    const fileInput = document.getElementById('getFile');
+    const descriptionInput = document.getElementById('title-image');
+    const categoryInput = document.getElementById('category-image');
+  
+    const newFileInput = fileInput.cloneNode(true);
+    fileInput.replaceWith(newFileInput);
+    descriptionInput.value = '';
+    categoryInput.value = '0';
+  };
+
   // Fonction pour ajouter les travaux
 
   const fileInput = document.getElementById('getFile');
@@ -211,12 +226,13 @@ function showModal() {
   
     // Ajouter le fichier et la description au FormData
     formData.append('image', fileInput.files[0]);
+    fileInput.value = null;
     formData.append('title', descriptionInput.value);
     formData.append('category', categoryInput.value);
-    console.log('Token:', token);
-    console.log(categoryInput.value);
-    console.log(descriptionInput.value);
-    console.log(formData);
+    // console.log('Token:', token);
+    // console.log(categoryInput.value);
+    // console.log(descriptionInput.value);
+    // console.log(formData);
   try {
     // Envoyer la requête avec fetch
     const response = await fetch('http://localhost:5678/api/works', {
@@ -242,6 +258,8 @@ function showModal() {
       })
       displayWorks();
       displayWorksModal();
+      // Vide le formulaire une fois le projet ajouté
+      resetFormFields();
     } else {
       console.error('Erreur lors du téléchargement du fichier:', response.statusText);
     }
@@ -250,32 +268,48 @@ function showModal() {
   }
 }
 
-// // Vérifie que le formulaire est bien rempli
+// Vérifie que le formulaire est bien rempli et envoie le fichier
 
-// document.getElementById('myForm').addEventListener('submit', function(event) {
-//   const form = event.target;
-  
-//   if (!form.checkValidity()) {
-//       event.preventDefault();
-//       alert('Veuillez remplir tous les champs obligatoires.');
-//   }
-// });
-
-// Ajouter un écouteur d'événements au bouton de soumission
 const uploadButton = document.getElementById('uploadButton')
-uploadButton.addEventListener('click', function(event) {
+const errorElement = document.getElementById('error-message');
+
+function validateAndUpload(event) {
   event.preventDefault(); // Empêcher le comportement par défaut du bouton
-  uploadFile();
-});
+  console.log(fileInput.value);
+  console.log(fileInput.files[0]);
+
+  // Vérifier les champs du formulaire
+  if (fileInput.files[0] == undefined || descriptionInput.value === '' || categoryInput.value === '0') {
+    // Afficher un message d'erreur si l'un des champs requis n'est pas rempli
+    errorElement.textContent = 'Veuillez remplir tous les champs obligatoires.';
+    errorElement.style.color = 'red';
+  } else {
+    errorElement.textContent = '';
+    // Appeler la fonction d'upload si tous les champs sont remplis
+    uploadFile();
+  }
+}
+
+// Ajouter un écouteur d'événement sur le clic du bouton de validation
+uploadButton.addEventListener('click', validateAndUpload);
 
 // Afficher miniature image
 
 const getFile = document.getElementById('getFile');
 const preview = document.getElementById('upload-works');
+const uploadWorksElement = document.querySelector('.upload-works img');
+const addPhoto = document.querySelector('.addPhoto');
+const formatPhoto = document.querySelector('.formatPhoto');
+
 
 getFile.addEventListener('change',() => {
   console.log(getFile.files[0])
   preview.src = URL.createObjectURL(getFile.files[0]);
+    // Changer la classe de l'élément
+    uploadWorksElement.className = 'thumbnail-img';
+    addPhoto.style.display = 'none';
+    formatPhoto.style.display = 'none';
+
   // const reader = new FileReader();
   //   reader.addEventListener('load',(e) => {
   //     preview.setAttribute('src', e.target.result);
@@ -285,6 +319,27 @@ getFile.addEventListener('change',() => {
   //   });
   //   reader.readAsDataURL(getFile.files[0]);
 })
+
+// // 1. Sélectionnez l'élément HTML correspondant au label de l'image
+// const imageLabel = document.querySelector('.addPhoto');
+
+// // 2. Écoutez l'événement de changement de l'input de l'élément de sélection d'image
+// const imageInput = document.querySelector('.image-input');
+
+// imageInput.addEventListener('change', function() {
+//   // 3. Obtenez le nom du fichier de l'image sélectionnée
+//   const fileName = imageInput.files[0].name;
+
+//   // 4. Créez une balise <img> avec le nom du fichier en tant que source
+//   const image = document.createElement('img');
+//   image.src = fileName;
+//   image.alt = 'uploaded-image';
+//   image.classList.add('uploaded-image');
+
+//   // 5. Remplacez le contenu de l'élément label par l'image
+//   imageLabel.innerHTML = '';
+//   imageLabel.appendChild(image);
+// });
 
   // Afficher ou masquer le contenu en fonction de l'état de connexion
 

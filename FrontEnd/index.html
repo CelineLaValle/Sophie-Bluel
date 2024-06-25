@@ -73,39 +73,40 @@
 
 <dialog class="modal">
 	<div class="modal_galery">
-	<button autofocus class="button_close"><i class="fa-solid fa-xmark"></i></button>
-	<p class="title_modal">Galerie photo</p>
-	<div class="modalDisplayWorks"></div>
-	<hr class="line">
-	<input type="submit" id="addPhoto" class="input_modal" value="Ajouter une photo">
-</div>
+		<button autofocus class="button_close"><i class="fa-solid fa-xmark"></i></button>
+		<p class="title_modal">Galerie photo</p>
+		<div class="modalDisplayWorks"></div>
+		<hr class="line">
+		<input type="submit" id="addPhoto" class="input_modal" value="Ajouter une photo">
+    </div>
 <div class="modal_add_photo hidden">
 	<button class="button_close"><i class="fa-solid fa-xmark"></i></button>
 	<button class="button_back"><i class="fa-solid fa-arrow-left"></i></button>
 	<p class="title_modal">Ajout photo</p>
-	<div class="modalWorks">
+	<div class="modalWorks" id="myForm">
 	 <label for="getFile" class="add-img" id="add-img">
 		<span class="upload-works">
-			<img src="./assets/icons/img.png" alt="image" id="upload-works" class="upload-works">
+			<img src="./assets/icons/img.png" alt="image" id="upload-works" class="upload-works-img">
   		</span>
 		<span class="addPhoto">+ Ajouter photo</span>
 		<span class="formatPhoto">jpg, png : 4mo max</span>
-		<input type="file" id="getFile" name="image" accept="image/*" required>
-	</label>
-	<label for="title-image" class="label-name">Titre</label>
-    <input type="text" id="title-image" name="title" required>
-    <label for="select" class="label-ctg">Catégorie</label>
-    <select id="category-image" class="select minimal" name="category" required>
-		<option value="0" label=""></option>
+		<input type="file" id="getFile" name="image" class="image-input" accept="image/*" required>
+	 </label>
+	 <label for="title-image" class="label-name">Titre</label>
+     <input type="text" id="title-image" name="title" required>
+     <label for="category-image" class="label-ctg">Catégorie</label>
+     <select id="category-image" class="select" name="category" required>
+		<option value="0"></option>
 		<option value="1">Objets</option>
 		<option value="2">Appartements</option>
 		<option value="3">Hotels & restaurants</option>
-		</select>
+	 </select>
+		<div id="error-message"></div>
 	</div>
 	<hr class="line">
 	<input type="submit" id="uploadButton" class="input_modal" value="Valider">
 </div>
-  </dialog>				
+</dialog>				
 
 <footer class="footer">
 	<nav>
