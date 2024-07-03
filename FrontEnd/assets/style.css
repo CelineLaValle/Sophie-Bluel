@@ -268,6 +268,18 @@ input[type="submit"]{
 	flex-direction: column;
 }
 
+.base-class {
+	/* Style de base pour réinitialiser */
+	display: block;
+	width: 100%;
+	height: auto;
+  }
+
+  /* Classe spécifique pour débogage */
+.debug-style {
+	border: 2px solid red; /* Exemple de style visible */
+  }
+
 /* #myForm {
 	display: flex;
 	justify-content: center;
@@ -453,6 +465,14 @@ input[type="submit"]{
 	border: none;
 	padding-left: 10px;
 	width: 40% !important;
+}
+
+.input_modalGrey {
+	height: 50px;
+	border: none;
+	padding-left: 10px;
+	width: 40% !important;
+	background-color: #A7A7A7 !important;
 }
 
 .button_close {

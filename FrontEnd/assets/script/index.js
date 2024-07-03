@@ -1,19 +1,21 @@
-/* fonction qui retourne le tableau */
+// fonction qui retourne le tableau
 async function getWorks () {
   const reponse = await fetch('http://localhost:5678/api/works');
   return await reponse.json();
 }
 
+// fonction qui retourne les catégories
 async function getCategories () {
   const reponse = await fetch('http://localhost:5678/api/categories');
   return await reponse.json();
 }
 
-/* Variable */
+// Variable
 const works = document.querySelector('.gallery');
 const token = window.sessionStorage.getItem('token');
 
-/* Fonction qui affiche les travaux */
+// Fonction qui affiche les travaux
+
 async function displayWorks() {
   const arrayWorks = await getWorks();
   // console.log(arrayWorks);
@@ -35,7 +37,7 @@ displayWorks();
 
 const filtersContainer = document.querySelector('.filters');
 
-/* Fonction qui affiche les filtres */
+// Fonction qui affiche les filtres
 
 async function displayButton() {
   const categories = await getCategories();
@@ -53,7 +55,7 @@ async function displayButton() {
 displayButton();
 
 
-/* Fonction qui met un évènement sur mes boutons */
+// Fonction qui met un évènement sur mes boutons
 
 function addEventOnButtons() {
   const buttons = document.querySelectorAll('.filter');
@@ -71,15 +73,13 @@ function addEventOnButtons() {
 }
 
 
-/* Fonction pour trier */
+// Fonction pour trier
 
-/* Récupération de category par ma fonction filtersWorks(category) => filterWorks(categoryBtn) */
+// Récupération de category par ma fonction filtersWorks(category) => filterWorks(categoryBtn)
 function filtersWorks(categoryBtn) {
   const allWorks = works.querySelectorAll('figure');
-  // console.log(allWorks)
   /* Itère sur les figures */
   allWorks.forEach(figure => {
-    // console.log(figure.getAttribute('category'));
     /* On compare les catégories des boutons avec les catégories des travaux */
     const categoryWork = figure.getAttribute('category');
     if (categoryBtn === categoryWork) {
@@ -113,6 +113,7 @@ const showButton = document.querySelector(".button_modal");
 const closeButtons = document.querySelectorAll(".button_close");
 
 // Le bouton "Afficher la fenêtre" ouvre le dialogue
+
 showButton.addEventListener("click", () => {
   dialog.showModal();
 });
@@ -209,8 +210,24 @@ function showModal() {
   
     const newFileInput = fileInput.cloneNode(true);
     fileInput.replaceWith(newFileInput);
+
+    // Réinitialise l'image prévisualisée avec l'image par défaut
+    const uploadWorksContainer = document.querySelector('.upload-works');
+    const uploadWorksImage = uploadWorksContainer.querySelector('img');
+    const addPhotoElement = document.querySelector('.addPhoto');
+    const formatPhotoElement = document.querySelector('.formatPhoto');
+    uploadWorksImage.src = './assets/icons/img.png';
+
+    // Réinitialisation des valeurs des autres champs
     descriptionInput.value = '';
     categoryInput.value = '0';
+
+    // Réinitialisation des classes des éléments nécessaires
+    uploadWorksContainer.classList.remove('thumbnail-img');
+    uploadWorksContainer.classList.add('upload-works');
+    uploadWorksImage.classList.add('upload-works-img');
+    addPhotoElement.classList.add('addPhoto');
+    formatPhotoElement.classList.add('formatPhoto');
   };
 
   // Fonction pour ajouter les travaux
@@ -309,37 +326,7 @@ getFile.addEventListener('change',() => {
     uploadWorksElement.className = 'thumbnail-img';
     addPhoto.style.display = 'none';
     formatPhoto.style.display = 'none';
-
-  // const reader = new FileReader();
-  //   reader.addEventListener('load',(e) => {
-  //     preview.setAttribute('src', e.target.result);
-  //     console.log(reader);
-  //     console.log(e.target.result);
-  //     console.log(preview);
-  //   });
-  //   reader.readAsDataURL(getFile.files[0]);
 })
-
-// // 1. Sélectionnez l'élément HTML correspondant au label de l'image
-// const imageLabel = document.querySelector('.addPhoto');
-
-// // 2. Écoutez l'événement de changement de l'input de l'élément de sélection d'image
-// const imageInput = document.querySelector('.image-input');
-
-// imageInput.addEventListener('change', function() {
-//   // 3. Obtenez le nom du fichier de l'image sélectionnée
-//   const fileName = imageInput.files[0].name;
-
-//   // 4. Créez une balise <img> avec le nom du fichier en tant que source
-//   const image = document.createElement('img');
-//   image.src = fileName;
-//   image.alt = 'uploaded-image';
-//   image.classList.add('uploaded-image');
-
-//   // 5. Remplacez le contenu de l'élément label par l'image
-//   imageLabel.innerHTML = '';
-//   imageLabel.appendChild(image);
-// });
 
   // Afficher ou masquer le contenu en fonction de l'état de connexion
 
@@ -377,3 +364,29 @@ const verifyTokenIsPresent = () =>  {
   }}
 
   verifyTokenIsPresent();
+
+// Changer la couleur du bouton en fonction de si le formulaire est bien rempli
+  
+// Sélectionnez votre bouton de validation
+const boutonValider = document.getElementById("uploadButton");
+
+// Définissez une fonction pour vérifier l'état des champs et mettre à jour la couleur du bouton
+function verifierChamps() {
+    var champ1 = document.querySelector("#getFile").value;
+    var champ2 = document.querySelector("#title-image").value;
+    var champ3 = document.querySelector("#category-image").value;
+    // Vérifiez toutes les conditions nécessaires pour considérer les champs comme valides
+    
+    if (champ1 !== "" && champ2 !== "" && champ3 !== "0") {
+        boutonValider.classList.add("input_modal");
+        boutonValider.classList.remove("input_modalGrey");
+    } else {
+        boutonValider.classList.remove("input_modal");
+        boutonValider.classList.add("input_modalGrey");
+    }
+}
+
+// Ajoutez des écouteurs d'événements à chaque champ pour appeler la fonction de vérification lorsqu'ils sont modifiés
+document.querySelector("#getFile").addEventListener("input", verifierChamps);
+document.querySelector("#title-image").addEventListener("input", verifierChamps);
+document.querySelector("#category-image").addEventListener("input", verifierChamps);
