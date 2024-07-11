@@ -18,7 +18,7 @@ const token = window.sessionStorage.getItem('token');
 
 async function displayWorks() {
   const arrayWorks = await getWorks();
-  // console.log(arrayWorks);
+
   arrayWorks.forEach(element => {
    const figure = document.createElement('figure');
    const img = document.createElement('img');
@@ -41,7 +41,12 @@ const filtersContainer = document.querySelector('.filters');
 
 async function displayButton() {
   const categories = await getCategories();
-  // console.log(categories);
+  const btn = document.createElement('button');
+  btn.textContent = 'Tous';
+  btn.setAttribute('category', '0');
+  btn.classList.add('filter');
+  btn.classList.add('clicked');
+  filtersContainer.appendChild(btn);
   categories.forEach(element => {
     const btn = document.createElement('button');
     btn.textContent = element.name;
@@ -50,22 +55,28 @@ async function displayButton() {
     filtersContainer.appendChild(btn);
   })
   addEventOnButtons();
+  addFilterEvents();
 }
 
-displayButton();
+// const filters = document.querySelectorAll('.filter');
+// console.log(filters);
 
+// if (tokenContent) {
+//   filters.forEach(element => {
+//     element.style.display = 'none';
+//   });
+// }
 
 // Fonction qui met un évènement sur mes boutons
 
 function addEventOnButtons() {
   const buttons = document.querySelectorAll('.filter');
-  // console.log(buttons);
+
   /* On itère sur les boutons */
   buttons.forEach(btn => {
     /* On ajoute un évènement sur chaque bouton */
     btn.addEventListener('click', (e) => {
       const category = e.target.getAttribute('category');
-      // console.log(category);
       filtersWorks(category);
     })
      })
@@ -94,6 +105,30 @@ function filtersWorks(categoryBtn) {
       
   })
 }
+
+
+// Sélectionner le premier filtre "Tous" si aucun autre filtre n'est sélectionné
+// const firstFilter = document.querySelector('.filter');
+// if (firstFilter) {
+//   firstFilter.classList.add('clicked');
+//   }
+
+// Couleur des filtres lorsqu'ils sont sélectionnés
+// Fonction pour définir les événements sur les filtres
+function addFilterEvents() {
+  const filters = document.querySelectorAll('.filter');
+
+  filters.forEach(function(filter) {
+    filter.addEventListener('click', function() {
+      filters.forEach(function(f) {
+        f.classList.remove('clicked');
+      });
+
+      this.classList.add('clicked');
+    });
+  });
+}
+
 
 // Bande mode édition
 
@@ -163,14 +198,13 @@ async function displayWorksModal() {
     },
 
   }).then((response) => {
+    // Si la réponse n'est pas ok alors la suppression ne fonctionne pas
     if (!response.ok) {
-      // console.log("La suppression n'a pas fonctionnée");
+      // Sinon elle fonctionne
     } else {
-      // console.log("La suppression a fonctionnée");
       figure.remove();
       const figuresGallery = document.querySelector('.gallery');
       const figuresLarges = figuresGallery.querySelectorAll('figure');
-      // console.log(figuresLarges);
       figuresLarges.forEach (figureLarge => {
        if (id == figureLarge.getAttribute("worksLargeId")) {
          figureLarge.remove();
@@ -222,13 +256,16 @@ function showModal() {
     descriptionInput.value = '';
     categoryInput.value = '0';
 
+    addPhotoElement.style.display = 'flex';
+    formatPhotoElement.style.display = 'flex';
+
     // Réinitialisation des classes des éléments nécessaires
-    uploadWorksContainer.classList.remove('thumbnail-img');
-    uploadWorksContainer.classList.add('upload-works');
+
     uploadWorksImage.classList.add('upload-works-img');
-    addPhotoElement.classList.add('addPhoto');
-    formatPhotoElement.classList.add('formatPhoto');
+
   };
+
+
 
   // Fonction pour ajouter les travaux
 
@@ -246,10 +283,6 @@ function showModal() {
     fileInput.value = null;
     formData.append('title', descriptionInput.value);
     formData.append('category', categoryInput.value);
-    // console.log('Token:', token);
-    // console.log(categoryInput.value);
-    // console.log(descriptionInput.value);
-    // console.log(formData);
   try {
     // Envoyer la requête avec fetch
     const response = await fetch('http://localhost:5678/api/works', {
@@ -277,6 +310,10 @@ function showModal() {
       displayWorksModal();
       // Vide le formulaire une fois le projet ajouté
       resetFormFields();
+      const modalGalery = document.querySelector(".modal_galery");
+      const modalAddPhoto = document.querySelector(".modal_add_photo");
+      modalGalery.classList.remove('hidden');
+      modalAddPhoto.classList.add('hidden');
     } else {
       console.error('Erreur lors du téléchargement du fichier:', response.statusText);
     }
@@ -322,6 +359,7 @@ const formatPhoto = document.querySelector('.formatPhoto');
 getFile.addEventListener('change',() => {
   console.log(getFile.files[0])
   preview.src = URL.createObjectURL(getFile.files[0]);
+
     // Changer la classe de l'élément
     uploadWorksElement.className = 'thumbnail-img';
     addPhoto.style.display = 'none';
@@ -333,6 +371,7 @@ getFile.addEventListener('change',() => {
 const tokenContent = sessionStorage.getItem('token');
 const privateContent = document.querySelectorAll('.privateContent');
 
+
 if (tokenContent) {
   privateContent.forEach (element => {
     element.style.display = 'flex';
@@ -342,6 +381,7 @@ if (tokenContent) {
   privateContent.forEach(element => {
     element.style.display = 'none';
   });
+  displayButton();
 }
 
 // Quand l'utilisateur est connecté
@@ -364,6 +404,24 @@ const verifyTokenIsPresent = () =>  {
   }}
 
   verifyTokenIsPresent();
+
+  // Cache les filtres
+// const filter = document.querySelectorAll('.filter');
+// console.log('Filter elements:', filter);
+// console.log(tokenContent)
+// if (tokenContent) {
+//   filter.forEach (element => {
+//     element.style.display = 'none';
+//     console.log('Hiding filter:', element);
+//   });
+// } else {
+//   filter.forEach(element => {
+//     element.style.display = 'inline-block';
+//     console.log('Display property:', element.style.display);
+//   });
+// }
+
+
 
 // Changer la couleur du bouton en fonction de si le formulaire est bien rempli
   
