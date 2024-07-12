@@ -253,13 +253,6 @@ input[type="submit"]{
 	border: none;
 }
 
-/* dialog[open] {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-direction: column;
-} */
-
 .modal_galery {
 	display: flex;
 	justify-content: center;
@@ -285,13 +278,6 @@ input[type="submit"]{
 .debug-style {
 	border: 2px solid red; /* Exemple de style visible */
   }
-
-/* #myForm {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-direction: column;
-} */
 
 .hidden {
 	display: none;
@@ -386,11 +372,6 @@ input[type="submit"]{
 	height: 70px;
 	margin-top: 10px;
 }
-
-/* .uploaded-image {
-	width: 70px;
-	height: 100%;
-} */
 
 #getFile {
 	display: none;
