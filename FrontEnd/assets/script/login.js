@@ -58,5 +58,5 @@ const errorMessage = document.querySelector('.error');
   password.classList.remove('input-error');
   errorMessage.textContent = '';
   postUsers(userEmail, userPassword);
-});
-}
+    });
+  }

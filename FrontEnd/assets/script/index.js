@@ -1,16 +1,16 @@
-// fonction qui retourne le tableau
+// Fonction qui retourne le tableau
 async function getWorks () {
   const reponse = await fetch('http://localhost:5678/api/works');
   return await reponse.json();
 }
 
-// fonction qui retourne les catégories
+// Fonction qui retourne les catégories
 async function getCategories () {
   const reponse = await fetch('http://localhost:5678/api/categories');
   return await reponse.json();
 }
 
-// Variable
+
 const works = document.querySelector('.gallery');
 const token = window.sessionStorage.getItem('token');
 
@@ -20,15 +20,21 @@ async function displayWorks() {
   const arrayWorks = await getWorks();
 
   arrayWorks.forEach(element => {
+   // Crée un élément HTML
    const figure = document.createElement('figure');
    const img = document.createElement('img');
    const figcaption = document.createElement('figcaption');
+   // J'insère l'image url qui vient du tableau dans la source de l'image
    img.src = element.imageUrl;
    figcaption.textContent = element.title;
+   // Ajoute un attribut "category" à l'élément <figure> avec la valeur de l'ID de la catégorie du projet
+   // Cela permet de trier ou de filtrer les projets par catégorie
    figure.setAttribute('category', element.categoryId);
    figure.setAttribute('worksLargeId', element.id);
+   // Ajoute l'élément <img> en tant qu'enfant de l'élément <figure>
    figure.appendChild(img);
    figure.appendChild(figcaption);
+   // Ajoute l'élément <figure> complet en tant qu'enfant de l'élément parent désigné par la variable works
    works.appendChild(figure);
   })
 }
@@ -84,7 +90,7 @@ function addEventOnButtons() {
 
 // Fonction pour trier
 
-// Récupération de category par ma fonction filtersWorks(category) => filterWorks(categoryBtn)
+// Récupération de (category) par ma fonction ci-dessus filtersWorks(category) => filtersWorks(categoryBtn)
 function filtersWorks(categoryBtn) {
   const allWorks = works.querySelectorAll('figure');
   /* Itère sur les figures */
@@ -192,19 +198,22 @@ async function displayWorksModal() {
 
  // Fonction pour supprimer une photo
 
+
  async function deleteWorks(id, figure) {
   const token = sessionStorage.getItem("token");
 
   await fetch(`http://localhost:5678/api/works/${id}`, {
+
     method: "DELETE",
+
     headers: {
+
       Authorization: `Bearer ${token}`,
     },
 
+
   }).then((response) => {
-    // Si la réponse n'est pas ok alors la suppression ne fonctionne pas
     if (!response.ok) {
-      // Sinon elle fonctionne
     } else {
       figure.remove();
       const figuresGallery = document.querySelector('.gallery');
@@ -229,8 +238,11 @@ async function uploadFile() {
   // Créer une instance de FormData
   const formData = new FormData();
 
-  // Ajouter le fichier et la description au FormData
+// Ajouter le fichier et la description au FormData (envoi à l'API)
+
   formData.append('image', fileInput.files[0]);
+  // Réinitialise l'élément input de fichier après avoir ajouté le fichier à FormData
+  // Permet à l'utilisateur de sélectionner à nouveau un fichier, y compris le même fichier
   fileInput.value = null;
   formData.append('title', descriptionInput.value);
   formData.append('category', categoryInput.value);
@@ -250,6 +262,7 @@ try {
 
     const figuresGallery = document.querySelector('.gallery');
     const figuresLarges = figuresGallery.querySelectorAll('figure');
+    // Permet de supprimer toute les figures pour les remettres avec celle qu'on a rajouté
     figuresLarges.forEach(figure => {
       figure.remove();
     })
@@ -261,8 +274,10 @@ try {
     displayWorksModal();
     // Vide le formulaire une fois le projet ajouté
     resetFormFields();
+    verifierChamps();
     const modalGalery = document.querySelector(".modal_galery");
     const modalAddPhoto = document.querySelector(".modal_add_photo");
+    // Une fois valider on revient sur la première modale
     modalGalery.classList.remove('hidden');
     modalAddPhoto.classList.add('hidden');
   } else {
@@ -307,7 +322,8 @@ const formatPhoto = document.querySelector('.formatPhoto');
 
 
 getFile.addEventListener('change',() => {
-
+  // Change la source de l'élément preview pour afficher l'image sélectionnée
+  // URL.createObjectURL crée une URL temporaire pour l'image sélectionnée
 preview.src = URL.createObjectURL(getFile.files[0]);
 
   // Changer la classe de l'élément
@@ -351,9 +367,6 @@ document.querySelector("#category-image").addEventListener("input", verifierCham
     const fileInput = document.getElementById('getFile');
     const descriptionInput = document.getElementById('title-image');
     const categoryInput = document.getElementById('category-image');
-  
-    const newFileInput = fileInput.cloneNode(true);
-    fileInput.replaceWith(newFileInput);
 
     // Réinitialise l'image prévisualisée avec l'image par défaut
     const uploadWorksContainer = document.querySelector('.upload-works');
@@ -405,15 +418,10 @@ if (tokenContent) {
 // Récupération du token stocké dans sessionStorage dans la variable token
 const verifyTokenIsPresent = () =>  {
     const login_button = document.getElementById("id_login_button");
-    // Si le token existe, alors l'utilisateur est connecté
     if(token) {
-    // Remplace le texte du bouton par logout
     login_button.textContent = "logout";
-    // Ajoute un gestionnaire d'événement pour le clic sur le bouton logout
     login_button.addEventListener("click", () => {
-      // Supprime le token de sessionStorage
       window.sessionStorage.removeItem("token");
-      // Change le texte du bouton par login
       login_button.textContent = "login";
       window.location.href = '../login.html';
     });
